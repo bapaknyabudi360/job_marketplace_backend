@@ -16,6 +16,10 @@ mongoose
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.use("/api/", authRoute);
 
 app.use("/api/users", userRoute);
