@@ -6,7 +6,12 @@ module.exports = {
     try {
       const savedJob = await newJob.save();
       const { __v, createdAt, updatedAt, ...others } = savedJob._doc;
-      res.status(200).json(others);
+      const jobData = {
+        status: 200,
+        message: "Job created successfully",
+        data: others,
+      };
+      res.status(200).json(jobData);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -22,18 +27,35 @@ module.exports = {
         { new: true }
       );
       const { __v, createdAt, updatedAt, ...others } = updatedJob._doc;
-      res.status(200).json(others);
+      const jobData = {
+        status: 200,
+        message: "Job updated successfully",
+        data: others,
+      };
+      res.status(200).json(jobData);
     } catch (err) {
-      res.status(500).json(err);
+      const jobData = {
+        status: 500,
+        message: "Job not updated",
+      };
+      res.status(500).json(jobData);
     }
   },
 
   deleteJob: async (req, res) => {
     try {
       await Jobs.findByIdAndDelete(req.params.id);
-      res.status(200).json("Job has been deleted...");
+      const jobData = {
+        status: 200,
+        message: "Job deleted successfully",
+      };
+      res.status(200).json(jobData);
     } catch (err) {
-      res.status(500).json(err);
+      const jobData = {
+        status: 500,
+        message: "Job not deleted",
+      };
+      res.status(500).json(jobData);
     }
   },
 
@@ -41,9 +63,18 @@ module.exports = {
     try {
       const job = await Jobs.findById(req.params.id);
       const { __v, createdAt, updatedAt, ...others } = job._doc;
-      res.status(200).json(others);
+      const jobData = {
+        status: 200,
+        message: "Job retrieved successfully",
+        data: others,
+      };
+      res.status(200).json(jobData);
     } catch (err) {
-      res.status(500).json(err);
+      const jobData = {
+        status: 500,
+        message: "Job not retrieved",
+      };
+      res.status(500).json(jobData);
     }
   },
 
@@ -63,9 +94,18 @@ module.exports = {
       } else {
         jobs = await Jobs.find();
       }
-      res.status(200).json(jobs);
+      const jobData = {
+        status: 200,
+        message: "Jobs retrieved successfully",
+        data: jobs,
+      };
+      res.status(200).json(jobData);
     } catch (err) {
-      res.status(500).json(err);
+      const jobData = {
+        status: 500,
+        message: "Jobs not retrieved",
+      };
+      res.status(500).json(jobData);
     }
   },
 
@@ -84,9 +124,18 @@ module.exports = {
           },
         },
       ]);
-      res.status(200).json(jobs);
+      const jobData = {
+        status: 200,
+        message: "Jobs retrieved successfully",
+        data: jobs,
+      };
+      res.status(200).json(jobData);
     } catch (err) {
-      res.status(500).json(err);
+      const jobData = {
+        status: 500,
+        message: "Jobs not retrieved",
+      };
+      res.status(500).json(jobData);
     }
   },
 };

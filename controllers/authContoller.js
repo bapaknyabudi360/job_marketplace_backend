@@ -15,32 +15,62 @@ module.exports = {
     });
     try {
       const user = await newUser.save();
-      res.status(201).json(user);
+      const userData = {
+        status: 200,
+        message: "User created successfully",
+        data: user,
+      };
+      res.status(200).json(userData);
     } catch (err) {
-      res.status(500).json(err);
+      const userData = {
+        status: 500,
+        message: "User not created",
+      };
+      res.status(500).json(userData);
     }
   },
 
   loginUser: async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
-      !user && res.status(401).json("Wrong Email!");
+      !user && res.status(401).json({ status: 400, message: "Wrong Email!" });
       var bytes = CryptoJS.AES.decrypt(
         user.password,
         process.env.CRYPTO_SECRET
       );
       var originalPassword = bytes.toString(CryptoJS.enc.Utf8);
       originalPassword !== req.body.password &&
-        res.status(401).json("Wrong Password!");
-      const token = jwt.sign({ user: user }, process.env.JWT_SECRET);
+        res.status(401).json({ status: 400, message: "Wrong Password!" });
+      const token = jwt.sign(
+        {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          isAgent: user.isAgent,
+          skills: user.skills,
+          profile: user.profile,
+        },
+        process.env.JWT_SECRET
+      );
 
       user.token = token;
       await user.save();
 
       const { password, __v, createdAt, updatedAt, ...others } = user._doc;
-      res.status(200).json(others);
+      const userData = {
+        status: 200,
+        message: "User logged in successfully",
+        data: others,
+      };
+      res.status(200).json(userData);
     } catch (err) {
-      res.status(500);
+      const userData = {
+        status: 500,
+        message: "User not logged in",
+        data: others,
+      };
+      res.status(500).json(userData);
     }
   },
 };
