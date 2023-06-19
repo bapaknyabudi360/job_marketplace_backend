@@ -33,14 +33,22 @@ module.exports = {
   loginUser: async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
-      !user && res.status(401).json({ status: 400, message: "Wrong Email!" });
-      var bytes = CryptoJS.AES.decrypt(
+      if (!user) {
+        return res.status(401).json({ status: 400, message: "Wrong Email!" });
+      }
+
+      const bytes = CryptoJS.AES.decrypt(
         user.password,
         process.env.CRYPTO_SECRET
       );
-      var originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-      originalPassword !== req.body.password &&
-        res.status(401).json({ status: 400, message: "Wrong Password!" });
+      const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+
+      if (originalPassword !== req.body.password) {
+        return res
+          .status(401)
+          .json({ status: 400, message: "Wrong Password!" });
+      }
+
       const token = jwt.sign(
         {
           id: user._id,
@@ -63,13 +71,13 @@ module.exports = {
         message: "User logged in successfully",
         data: others,
       };
-      res.status(200).json(userData);
+      return res.status(200).json(userData);
     } catch (err) {
       const userData = {
         status: 500,
         message: "User not logged in",
       };
-      res.status(500).json(userData);
+      return res.status(500).json(userData);
     }
   },
 };
