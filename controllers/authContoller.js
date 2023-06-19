@@ -68,7 +68,6 @@ module.exports = {
       const userData = {
         status: 500,
         message: "User not logged in",
-        data: others,
       };
       res.status(500).json(userData);
     }
