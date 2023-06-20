@@ -18,8 +18,7 @@ module.exports = {
         { new: true }
       );
 
-      const { password, __v, createdAt, updatedAt, ...others } =
-        updatedUser._doc;
+      const { password, __v, createdAt, ...others } = updatedUser._doc;
       const userData = {
         status: 200,
         message: "User updated successfully",
