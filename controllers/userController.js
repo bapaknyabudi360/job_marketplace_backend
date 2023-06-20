@@ -55,7 +55,7 @@ module.exports = {
     try {
       const user = await User.findById(req.params.id);
 
-      const { password, __v, createdAt, updatedAt, ...others } = user._doc;
+      const { password, __v, createdAt, ...others } = user._doc;
       const userData = {
         status: 200,
         message: "User retrieved successfully",
