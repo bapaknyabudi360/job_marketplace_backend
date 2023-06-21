@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema(
     profile: {
       type: String,
       required: true,
-      default: "https://picsum.photos/250?image=9",
+      default: "",
     },
     token: { type: String, required: false, default: "" },
   },
