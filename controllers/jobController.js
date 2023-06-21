@@ -5,7 +5,7 @@ module.exports = {
     const newJob = new Jobs(req.body);
     try {
       const savedJob = await newJob.save();
-      const { __v, createdAt, ...others } = savedJob._doc;
+      const { __v, ...others } = savedJob._doc;
       const jobData = {
         status: 200,
         message: "Job created successfully",
