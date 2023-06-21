@@ -5,7 +5,7 @@ module.exports = {
     const newJob = new Jobs(req.body);
     try {
       const savedJob = await newJob.save();
-      const { __v, createdAt, updatedAt, ...others } = savedJob._doc;
+      const { __v, createdAt, ...others } = savedJob._doc;
       const jobData = {
         status: 200,
         message: "Job created successfully",
@@ -26,7 +26,7 @@ module.exports = {
         },
         { new: true }
       );
-      const { __v, createdAt, updatedAt, ...others } = updatedJob._doc;
+      const { __v, createdAt, ...others } = updatedJob._doc;
       const jobData = {
         status: 200,
         message: "Job updated successfully",
@@ -62,7 +62,7 @@ module.exports = {
   getJob: async (req, res) => {
     try {
       const job = await Jobs.findById(req.params.id);
-      const { __v, createdAt, updatedAt, ...others } = job._doc;
+      const { __v, createdAt, ...others } = job._doc;
       const jobData = {
         status: 200,
         message: "Job retrieved successfully",
