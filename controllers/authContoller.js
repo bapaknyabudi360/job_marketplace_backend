@@ -73,11 +73,36 @@ module.exports = {
       };
       return res.status(200).json(userData);
     } catch (err) {
+      console.log(err);
       const userData = {
         status: 500,
         message: "User not logged in",
       };
       return res.status(500).json(userData);
+    }
+  },
+  logoutUser: async (req, res) => {
+    console.log(req.headers.token);
+    if (req.headers.token) {
+      try {
+        const user = await User.findOne({ token: req.headers.token });
+        if (!user) {
+          return res.status(401).json({ status: 400, message: "Wrong Token!" });
+        }
+        user.token = "";
+        await user.save();
+        const userData = {
+          status: 200,
+          message: "User logged out successfully",
+        };
+        return res.status(200).json(userData);
+      } catch (err) {
+        const userData = {
+          status: 500,
+          message: "User not logged out",
+        };
+        return res.status(500).json(userData);
+      }
     }
   },
 };
