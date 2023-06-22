@@ -19,7 +19,7 @@ router.delete("/:id", verifyTokenAndAdmin, jobController.deleteJob);
 router.get("/find/:id", verifyTokenAndAuthorization, jobController.getJob);
 
 // GET ALL JOBS
-router.get("/", verifyTokenAndAuthorization, jobController.getAllJobs);
+router.get("/", verifyToken, jobController.getAllJobs);
 
 // SEARCH JOBS
 router.get(

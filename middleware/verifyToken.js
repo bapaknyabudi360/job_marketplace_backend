@@ -20,6 +20,7 @@ const verifyToken = async (req, res, next) => {
 
 const verifyTokenAndAuthorization = async (req, res, next) => {
   await verifyToken(req, res, () => {
+    console.log("req.params.id :", req.params.id);
     if (req.user.id === req.params.id) {
       next();
     } else {
