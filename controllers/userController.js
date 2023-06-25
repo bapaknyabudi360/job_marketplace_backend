@@ -15,6 +15,7 @@ module.exports = {
         user.profile =
           "https://firebasestorage.googleapis.com/v0/b/jobmarketplace-a1007.appspot.com/o/jobMarket%2Fuser.png?alt=media&token=41640379-346c-489d-bb0c-4c2fb41d5ec4";
       }
+      user.isFirstTime = false;
       const updatedUser = await User.findByIdAndUpdate(
         req.params.id,
         {
