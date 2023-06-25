@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
     phone: { type: String, required: false },
     isAdmin: { type: Boolean, default: false },
     isAgent: { type: Boolean, default: false },
+    isFirstTime: { type: Boolean, default: true },
     skills: { type: Array, required: false },
     profile: {
       type: String,
